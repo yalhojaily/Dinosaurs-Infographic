@@ -59,13 +59,13 @@
     (function getDataFromForm(){
         document.getElementById('btn').addEventListener('click', function(){
             let human = new Human();
-            console.log(compareWeight(human));
+            
         })
     }())
     
     // Create Dino Compare Method 1
     // NOTE: Weight in JSON file is in lbs, height in inches. 
-    function compareWeight(human){
+    function compareWeight(){
         dinos.forEach((element) => {
             if(element.weight > human.weight){
                 return `${element.species} is ${element.weight} lbs. It's heavey than ${human.name}`;

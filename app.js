@@ -95,7 +95,7 @@
                     
         });
         
-       // allFacts.push(weightResults);
+       
         
     }
         
@@ -110,7 +110,7 @@
                 allFacts[element.species].push(`${element.species} is ${element.height} inches. It's shorter than ${human.name}`);
             }
         })
-      //  allFacts.push(heightResults);
+     
    
     }
 

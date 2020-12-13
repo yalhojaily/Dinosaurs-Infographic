@@ -66,21 +66,19 @@
     (function getDataFromForm(){
         document.getElementById('btn').addEventListener('click', function(){
              human = new Human();
-             renderImage(dinos);        
+            addTiles(dinos);
+                
         })
     }())
     
 
     // To storing facts from all three comparing methods and JSON file facts
-    let allFacts = [];
-
-    // concat and shuffle facts
-    function randomFact(){
-        //concat facts
-        allFacts = [].concat.apply([], allFacts);
-
-        // return one fact randomly
-         return allFacts[Math.floor(Math.random() * allFacts.length)];
+    let allFacts = {};
+   
+    function randomFact(species){
+        
+        const dinoFacts = allFacts[species];
+        return dinoFacts[Math.floor(Math.random() * dinoFacts.length)];
         
     }
     
@@ -88,14 +86,16 @@
     // NOTE: Weight in JSON file is in lbs, height in inches. 
     function compareWeight(human){
         const weightResults = dinos.map(function(element){
+            allFacts[element.species] = new Array();
             if(element.weight > human.weight){
-                      return `${element.species} is ${element.weight} lbs. It's heavier than ${human.name}`;
+                allFacts[element.species].push(`${element.species} is ${element.weight} lbs. It's heavier than ${human.name}`);
                 } else {
-                        return `${element.species} is ${element.weight} lbs. It's thinner than ${human.name}`;
+                    allFacts[element.species].push(`${element.species} is ${element.weight} lbs. It's thinner than ${human.name}`);
                     }
+                    
         });
         
-        allFacts.push(weightResults);
+       // allFacts.push(weightResults);
         
     }
         
@@ -105,39 +105,40 @@
     function compareHeight(human){
         const heightResults = dinos.map(function(element){
             if(element.height > human.height){
-                return `${element.species} is ${element.height} inches. It's taller than ${human.name}`;
+                allFacts[element.species].push(`${element.species} is ${element.height} inches. It's taller than ${human.name}`);
             } else {
-                return `${element.species} is ${element.height} inches. It's shorter than ${human.name}`;
+                allFacts[element.species].push(`${element.species} is ${element.height} inches. It's shorter than ${human.name}`);
             }
         })
-        allFacts.push(heightResults);
+      //  allFacts.push(heightResults);
    
     }
-    // collect facts from json file
-    function collectDinosFacts(){
-        const dinoFacts = dinos.map(function(element){
-            return element.fact;
-        })
-        allFacts.push(dinoFacts);
-    }
-    
+
     // Create Dino Compare Method 3
     // NOTE: Weight in JSON file is in lbs, height in inches.
     function compareDiet(human){
         const dietResults = dinos.map(function(element){
             if(element.diet === human.diet.toLowerCase()){
-                return `${element.species} had a ${element.diet} diet. It's the same diet of ${human.name}`;
+                allFacts[element.species].push(`${element.species} had a ${element.diet} diet. It's the same diet of ${human.name}`);
             } else {
-                return `${element.species} had a ${element.diet} diet. It's different than ${human.name}'s diet.`;
+                allFacts[element.species].push(`${element.species} had a ${element.diet} diet. It's different than ${human.name}'s diet.`);
             }
 })
 
-        allFacts.push(dietResults);
+      
 
     }
 
+    // collect facts from json file
+    function collectDinosFacts(){
+        const dinoFacts = dinos.map(function(element){
+            allFacts[element.species].push(element.fact);
+        })
+       
+    }
+    
     // Add tiles to DOM
-    function renderImage(array){
+    function addTiles(array){
 
         compareWeight(human);
         compareHeight(human);
@@ -147,7 +148,7 @@
         
         for(let i = 0; i < array.length; i++){
            
-            let matchFact = randomFact();
+            let matchFact = randomFact(array[i].species);
             
             // Putting human object in the middle of infographic
             if(i == 4){
@@ -159,19 +160,8 @@
             
                 const dinoTile = document.createElement('div');
                 dinoTile.classList.add('grid-item');
-                dinoTile.innerHTML = `<h3>${array[i].species}</h3> <img src="./images/${array[i].image}"> `;
-                
-                if((matchFact.includes(array[i].species)) && (matchFact.includes(human.name))){
-                    dinoTile.innerHTML += `<p>${matchFact}</p>`;
-                    main.appendChild(dinoTile);
-                    
-                 } else {
-                     dinoTile.innerHTML += `<p>${array[i].fact}</p>`;
-                     main.appendChild(dinoTile);
-                     
-                }
-               
-                
+                dinoTile.innerHTML = `<h3>${array[i].species}</h3> <img src="./images/${array[i].image}"><p>${matchFact}</p>`;
+                main.appendChild(dinoTile);
         }
        
 

@@ -148,7 +148,8 @@
         for(let i = 0; i < array.length; i++){
            
             let matchFact = randomFact();
-            console.log(matchFact);
+            
+            // Putting human object in the middle of infographic
             if(i == 4){
                 const humanTile = document.createElement('div');
                 humanTile.classList.add('grid-item');
@@ -160,7 +161,7 @@
                 dinoTile.classList.add('grid-item');
                 dinoTile.innerHTML = `<h3>${array[i].species}</h3> <img src="./images/${array[i].image}"> `;
                 
-                if((matchFact.includes(array[i].species))){
+                if((matchFact.includes(array[i].species)) && (matchFact.includes(human.name))){
                     dinoTile.innerHTML += `<p>${matchFact}</p>`;
                     main.appendChild(dinoTile);
                     
@@ -169,7 +170,7 @@
                      main.appendChild(dinoTile);
                      
                 }
-                matchFact = '';
+               
                 
         }
        

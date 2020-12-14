@@ -73,7 +73,7 @@
     
 
     // To storing facts from all three comparing methods and JSON file facts
-    let allFacts = {};
+    const allFacts = {};
    
     function randomFact(species){
         
@@ -148,7 +148,7 @@
         
         for(let i = 0; i < array.length; i++){
            
-            let matchFact = randomFact(array[i].species);
+            const matchFact = randomFact(array[i].species);
             
             // Putting human object in the middle of infographic
             if(i == 4){
